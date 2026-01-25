@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<img src="/assets/images/profile.jpg" alt="Yang Zhao" class="profile-image">
+<img src="assets/images/Zhao202512.png" alt="Yang Zhao" class="profile-image">
 
 <p class="tagline">Researcher · Artist · Writer</p>
 
