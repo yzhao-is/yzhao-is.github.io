@@ -2,146 +2,177 @@
 layout: default
 title: Art
 ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .album-cover {
+      position: relative;
+    }
+    .album-cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 p-8">
 
-<div class="max-w-6xl mx-auto space-y-12">
-
-  <!-- Header -->
-  <div class="max-w-4xl">
-    <h1 class="text-4xl font-bold mb-4">Art</h1>
-    <p class="text-gray-600 text-lg">
-      I identify as an outsider artist. 
-      Through various of traditional media, I investigate nature, gender, & neurodiversity.
-    </p>
+  <div id="app" class="max-w-6xl mx-auto space-y-12">
+    <!-- Content rendered by JS -->
   </div>
 
-  <!-- Gallery -->
-  <section>
-    <h2 class="text-2xl font-semibold mb-6">Selected Works</h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <script>
+    const albums = [
+      {
+        id: 'female gaze',
+        title: 'The Female Gaze Series',
+        cover: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&auto=format&fit=crop',
+        description: 'Rooted in personal experience, this series embraces the female gaze to reclaim women's agency and challenge objectification in art.',
+        year: '2017-present',
+        images: [
+          { src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&auto=format&fit=crop', title: 'Do some math', medium: 'Sketches on draft paper' },
+          { src: 'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&auto=format&fit=crop', title: 'The Lost L (draft)', medium: 'AI-generated (OpenAI Image Generation Model)' },
+        ]
+      },
+      {
+        id: 'still life',
+        title: 'Still Life',
+        cover: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=800&auto=format&fit=crop',
+        description: 'Delusional nature & still life',
+        year: '2017-2018',
+        images: [
+          { src: 'assets/images/art/Burning.jpg', title: 'Burning, 2018', medium: 'Acrylic on canvas' },
+          { src: 'assets/images/art/DemandingTheImpossible.jpg', title: 'Demanding the Impossible, 2017', medium: 'Acrylic on canvas' },
+          { src: 'https://images.unsplash.com/photo-1576089196834-15c0f9962a5f?w=800&auto=format&fit=crop', title: 'Leaf, 2025', medium: 'Mosaic on cork coaster, laser engraving, seal ink' },
+        ]
+      },
+      {
+        id: 'Other',
+        title: 'Other works',
+        cover: 'https://images.unsplash.com/photo-1576089196834-15c0f9962a5f?w=800&auto=format&fit=crop'
+        year: '2017-present',
+        images: [
+          { src: 'https://images.unsplash.com/photo-1576089196834-15c0f9962a5f?w=800&auto=format&fit=crop', title: 'Merry Christmas, Mr. Laurence', medium: 'Acrylic on canvas' },
+        
+        ]
+      }
+    ];
 
-      <div class="space-y-3">
-        <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&auto=format&fit=crop" 
-            alt="Artwork Title 1"
-            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-          >
+    let currentView = 'gallery';
+    let currentAlbum = null;
+
+    function render() {
+      const app = document.getElementById('app');
+      
+      if (currentView === 'gallery') {
+        app.innerHTML = renderGallery();
+      } else {
+        app.innerHTML = renderAlbum(currentAlbum);
+      }
+    }
+
+    function renderGallery() {
+      return `
+        <div class="max-w-4xl">
+          <h1 class="text-4xl font-bold mb-4">Art</h1>
+          <p class="text-gray-600 text-lg">
+            I identify as an outsider artist. 
+            Through various traditional media, I investigate nature, gender, & neurodiversity.
+          </p>
         </div>
+
+        <section>
+          <h2 class="text-2xl font-semibold mb-6">Albums</h2>
+          <div class="grid md:grid-cols-2 gap-8">
+            ${albums.map(album => `
+              <div 
+                class="cursor-pointer group"
+                onclick="openAlbum('${album.id}')"
+              >
+                <div class="album-cover aspect-[4/3] bg-gray-200 rounded-lg overflow-hidden relative">
+                  <img 
+                    src="${album.cover}" 
+                    alt="${album.title}"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  >
+                  <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                    <h3 class="font-semibold text-white text-xl">${album.title}</h3>
+                    <p class="text-white/80 text-sm">${album.images.length} works · ${album.year}</p>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">${album.description}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderAlbum(albumId) {
+      const album = albums.find(a => a.id === albumId);
+      
+      return `
         <div>
-          <h3 class="font-semibold">Artwork Title 1</h3>
-          <p class="text-sm text-gray-600">Medium/technique, 2024</p>
-          <p class="text-sm text-gray-700 mt-2">Description or context for this piece.</p>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&auto=format&fit=crop" 
-            alt="Artwork Title 2"
-            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          <button 
+            onclick="backToGallery()"
+            class="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
           >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Albums
+          </button>
+          
+          <div class="max-w-4xl mb-8">
+            <h1 class="text-4xl font-bold mb-2">${album.title}</h1>
+            <p class="text-gray-600">${album.description}</p>
+            <p class="text-gray-500 text-sm mt-1">${album.year} · ${album.images.length} works</p>
+          </div>
         </div>
-        <div>
-          <h3 class="font-semibold">Artwork Title 2</h3>
-          <p class="text-sm text-gray-600">Medium/technique, 2023</p>
-          <p class="text-sm text-gray-700 mt-2">What this work explores or represents.</p>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          ${album.images.map(img => `
+            <div class="space-y-2">
+              <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
+                <img 
+                  src="${img.src}" 
+                  alt="${img.title}"
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                >
+              </div>
+              <div>
+                <h3 class="font-medium">${img.title}</h3>
+                <p class="text-sm text-gray-600">${img.medium}</p>
+              </div>
+            </div>
+          `).join('')}
         </div>
-      </div>
+      `;
+    }
 
-      <div class="space-y-3">
-        <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1549887534-1541e9326642?w=800&auto=format&fit=crop" 
-            alt="Artwork Title 3"
-            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-          >
-        </div>
-        <div>
-          <h3 class="font-semibold">Artwork Title 3</h3>
-          <p class="text-sm text-gray-600">Medium/technique, 2023</p>
-          <p class="text-sm text-gray-700 mt-2">Inspiration or process behind this piece.</p>
-        </div>
-      </div>
+    function openAlbum(albumId) {
+      currentView = 'album';
+      currentAlbum = albumId;
+      render();
+      window.scrollTo(0, 0);
+    }
 
-      <div class="space-y-3">
-        <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=800&auto=format&fit=crop" 
-            alt="Artwork Title 4"
-            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-          >
-        </div>
-        <div>
-          <h3 class="font-semibold">Artwork Title 4</h3>
-          <p class="text-sm text-gray-600">Medium/technique, 2022</p>
-          <p class="text-sm text-gray-700 mt-2">Context for this work.</p>
-        </div>
-      </div>
+    function backToGallery() {
+      currentView = 'gallery';
+      currentAlbum = null;
+      render();
+    }
 
-      <div class="space-y-3">
-        <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=800&auto=format&fit=crop" 
-            alt="Artwork Title 5"
-            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-          >
-        </div>
-        <div>
-          <h3 class="font-semibold">Artwork Title 5</h3>
-          <p class="text-sm text-gray-600">Medium/technique, 2022</p>
-          <p class="text-sm text-gray-700 mt-2">Notes on the creation of this piece.</p>
-        </div>
-      </div>
+    // Initial render
+    render();
+  </script>
 
-      <div class="space-y-3">
-        <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1576089196834-15c0f9962a5f?w=800&auto=format&fit=crop" 
-            alt="Artwork Title 6"
-            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-          >
-        </div>
-        <div>
-          <h3 class="font-semibold">Artwork Title 6</h3>
-          <p class="text-sm text-gray-600">Medium/technique, 2021</p>
-          <p class="text-sm text-gray-700 mt-2">Background or artistic statement.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Exhibitions -->
-  <section class="max-w-4xl">
-    <h2 class="text-2xl font-semibold mb-6">Exhibitions</h2>
-    <div class="space-y-4">
-
-      <div class="border-l-4 border-gray-300 pl-4">
-        <h3 class="font-semibold">Exhibition or Show Title</h3>
-        <p class="text-gray-600 text-sm">Gallery or Space Name, City, State</p>
-        <p class="text-gray-500 text-sm">Month Year</p>
-      </div>
-
-      <div class="border-l-4 border-gray-300 pl-4">
-        <h3 class="font-semibold">Group Exhibition Name</h3>
-        <p class="text-gray-600 text-sm">Venue Name, City, State</p>
-        <p class="text-gray-500 text-sm">Month Year</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Artist Statement -->
-  <section class="max-w-4xl bg-gray-50 rounded-lg p-8">
-    <h2 class="text-2xl font-semibold mb-4">Artist Statement</h2>
-    <div class="prose prose-lg max-w-none">
-      <p class="text-gray-700 leading-relaxed">
-        [Your artist statement here. Discuss your approach, influences, themes, 
-        and what drives your artistic practice. This can be several paragraphs 
-        explaining your work and its relationship to your broader interests.]
-      </p>
-    </div>
-  </section>
-
-</div>
+</body>
+</html>
