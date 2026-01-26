@@ -133,16 +133,16 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        ${album.images.map(img => `
-          <div class="space-y-2">
-            <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-              <img 
-                src="${img.src}" 
-                alt="${img.title}"
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
-            </div>
+      <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+  ${album.images.map(img => `
+    <div class="break-inside-avoid space-y-2">
+      <div class="rounded-lg overflow-hidden bg-gray-100">
+        <img 
+          src="${img.src}" 
+          alt="${img.title}"
+          class="w-full h-auto"
+        >
+      </div>
             <div>
               <h3 class="font-medium">${img.title}</h3>
               <p class="text-sm text-gray-600">${img.medium}</p>
