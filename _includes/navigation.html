@@ -26,7 +26,11 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10 M9.5 3h5 M3 8h18 M4 8v10a2 2 0 002 2h12a2 2 0 002-2V8 M8 12h8 M8 16h5"/></svg>
           <span>Teaching</span>
         </a>
-        
+        <a href="{{ '/cat' | relative_url }}" 
+           class="flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors {% if page.url contains 'cat' %}bg-blue-50 text-blue-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10 M9.5 3h5 M3 8h18 M4 8v10a2 2 0 002 2h12a2 2 0 002-2V8 M8 12h8 M8 16h5"/></svg>
+          <span>Meow</span>
+        </a>
         {% comment %}
         <a href="{{ '/writing' | relative_url }}" 
            class="flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors {% if page.url contains 'writing' %}bg-blue-50 text-blue-600{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
